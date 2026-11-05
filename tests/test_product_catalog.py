@@ -1,5 +1,4 @@
 import pytest
-from playwright.sync_api import expect
 
 from test_data.products import (PRODUCTS, EXPECTED_PRODUCT_COUNT,SORTING_TEST_DATA,)
 

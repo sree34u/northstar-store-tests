@@ -8,8 +8,8 @@ class ProductDetails:
         self.product_desc = page.locator('[data-test="inventory-item-desc"]')
         self.product_image = page.locator(".inventory_details_img")
         self.product_price = page.locator('[data-test="inventory-item-price"]')
-        self.add_to_cart = page.locator('[data-test="add-to-cart"]')
-        self.remove_cart = page.locator('[data-test="remove"]')
+        self.add_to_cart_button = page.locator('[data-test="add-to-cart"]')
+        self.remove_cart_button = page.locator('[data-test="remove"]')
         self.cart_badge = page.locator('[data-test="shopping-cart-badge"]')
         self.back_to_products = page.locator('[data-test="back-to-products"]')
 
@@ -30,10 +30,10 @@ class ProductDetails:
         return float(price.replace("$", ""))
 
     def add_to_cart(self) -> None:
-        self.add_to_cart.click()
+        self.add_to_cart_button.click()
 
     def remove_cart(self) -> None:
-        self.remove_cart.click()
+        self.remove_cart_button.click()
 
     def get_cart_count(self) -> int:
         if self.cart_badge.count() == 0:
