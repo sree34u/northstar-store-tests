@@ -36,14 +36,11 @@ def login_page(page: Page) -> LoginPage:
     return LoginPage(page)
 
 @pytest.fixture
-def inventory_page(page: Page,  sauce_username: str, sauce_password: str, ) -> InventoryPage:
-    
-    login = LoginPage(page)
+def inventory_page(login_page: LoginPage,  sauce_username: str, sauce_password: str, ) -> InventoryPage:
+    login_page.open()
+    login_page.login(sauce_username, sauce_password)
 
-    login.open()
-    login.login(sauce_username, sauce_password)
-
-    inventory = InventoryPage(page)
+    inventory = InventoryPage(login_page.page)
     inventory.wait_until_loaded()
 
     return inventory
