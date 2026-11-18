@@ -1,19 +1,32 @@
-from playwright.sync_api import Locator, Page, expect
+import re
+from playwright.sync_api import Page, expect
+
 
 class ProductDetails:
+
     def __init__(self, page: Page):
         self.page = page
 
-        self.product_name = page.locator('[data-test="inventory-item-name"]')
-        self.product_desc = page.locator('[data-test="inventory-item-desc"]')
+        # Product details
+        self.details_container = page.locator("div.inventory_details")
+        self.product_name = page.locator(".inventory_details_name")
+        self.product_desc = page.locator(".inventory_details_desc")
         self.product_image = page.locator(".inventory_details_img")
-        self.product_price = page.locator('[data-test="inventory-item-price"]')
+        self.product_price = page.locator(".inventory_details_price")
+
+        # Cart
         self.add_to_cart_button = page.locator('[data-test="add-to-cart"]')
         self.remove_cart_button = page.locator('[data-test="remove"]')
         self.cart_badge = page.locator('[data-test="shopping-cart-badge"]')
+
+        # Navigation
         self.back_to_products = page.locator('[data-test="back-to-products"]')
 
     def wait_until_loaded(self) -> None:
+        expect(self.page).to_have_url(
+            re.compile(r".*/inventory-item\.html\?id=\d+")
+        )
+        expect(self.details_container).to_be_visible()
         expect(self.product_name).to_be_visible()
         expect(self.product_desc).to_be_visible()
         expect(self.product_image).to_be_visible()

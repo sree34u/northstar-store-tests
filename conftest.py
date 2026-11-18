@@ -46,8 +46,8 @@ def inventory_page(login_page: LoginPage,  sauce_username: str, sauce_password: 
     return inventory
 
 @pytest.fixture
-def product_details_page(inventory_page: InventoryPage) -> ProductDetails:
-    inventory_page.open_product("Sauce Labs Backpack")
+def product_details_page(inventory_page: InventoryPage, product: dict) -> ProductDetails:
+    inventory_page.open_product(product["name"])
     
     product_details = ProductDetails(inventory_page.page)
     product_details.wait_until_loaded() 
