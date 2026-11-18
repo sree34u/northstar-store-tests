@@ -1,5 +1,5 @@
 from playwright.sync_api import Page, Locator, expect
-
+import re
 
 class InventoryPage:
     INVENTORY_URL = "https://www.saucedemo.com/inventory.html"
@@ -204,9 +204,10 @@ class InventoryPage:
         self.sort_dropdown.select_option(option)
 
     def open_product(self, product_name: str) -> None:
-        self.get_product(product_name).locator(
-            '[data-test="inventory-item-name"]'
-        ).click()
+        product = self.get_product(product_name)
+        product.locator('[data-test="inventory-item-name"]').click()
+        expect(self.page, f"Failed to navigate to details page for '{product_name}'"
+               ).to_have_url(re.compile(r".*/inventory-item\.html\?id=\d+"))
 
     def open_cart(self) -> None:
         self.cart_link.click()
