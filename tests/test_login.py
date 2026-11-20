@@ -7,7 +7,7 @@ def test_valid_user_can_login(page, login_page: LoginPage, sauce_username: str, 
     login_page.open()
     login_page.login(sauce_username, sauce_password)
 
-    expect(page).to_have_url("https://www.saucedemo.com/inventory.html")
+    expect(login_page.page).to_have_url("https://www.saucedemo.com/inventory.html")
 
 def test_invalid_user_cannot_login(login_page: LoginPage,):
 
