@@ -29,7 +29,11 @@ class ProductDetails:
         expect(self.details_container).to_be_visible()
         expect(self.product_name).to_be_visible()
         expect(self.product_desc).to_be_visible()
+
         expect(self.product_image).to_be_visible()
+        expect(self.product_image).to_have_js_property("complete", True,)
+        expect(self.product_image, "Product image failed to load.").not_to_have_js_property("naturalWidth", 0)
+
         expect(self.product_price).to_be_visible()
 
     def get_product_name(self) -> str:
@@ -51,6 +55,7 @@ class ProductDetails:
     def get_cart_count(self) -> int:
         if self.cart_badge.count() == 0:
             return 0
+        expect(self.cart_badge).to_be_visible()
         return int(self.cart_badge.inner_text())
 
     def go_back_to_products(self) -> None:
