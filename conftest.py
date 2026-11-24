@@ -7,6 +7,7 @@ from playwright.sync_api import Page, expect
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 from pages.product_details_page import ProductDetails
+from pages.cart_page import CartPage
 
 load_dotenv()
 
@@ -53,3 +54,13 @@ def product_details_page(inventory_page: InventoryPage, product: dict) -> Produc
     product_details.wait_until_loaded() 
     
     return product_details
+
+@pytest.fixture
+def cart_page(inventory_page: InventoryPage) -> CartPage:
+
+    inventory_page.open_cart()
+
+    cart = CartPage(inventory_page.page)
+    cart.wait_until_loaded()
+
+    return cart
